@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, nanoid } from "@reduxjs/toolkit";
 
 export const todosSlides = createSlice({
   name: "todos",
@@ -18,8 +18,19 @@ export const todosSlides = createSlice({
     activeFilter: "all",
   },
   reducers: {
-    addNewTodo: (state, action) => {
-      state.items.push(action.payload);
+    addNewTodo: {
+      reducer: (state, action) => {
+        state.items.push(action.payload);
+      },
+      prepare: ({ title }) => {
+        return {
+          payload: {
+            id: nanoid(),
+            completed: false,
+            title,
+          },
+        };
+      },
     },
     toggle: (state, action) => {
       const { id } = action.payload;

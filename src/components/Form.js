@@ -12,7 +12,7 @@ const Form = () => {
   const handleSubmit = (e) => {
     if (!title) return;
     e.preventDefault();
-    dispatch(addNewTodo({ id: nanoid(), title, completed: false }));
+    dispatch(addNewTodo({ title }));
     setTitle("");
   };
 

@@ -10,6 +10,7 @@ const Form = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
+    if (!title) return;
     e.preventDefault();
     dispatch(addNewTodo({ id: nanoid(), title, completed: false }));
     setTitle("");

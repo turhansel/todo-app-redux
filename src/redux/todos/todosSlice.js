@@ -15,6 +15,7 @@ export const todosSlides = createSlice({
         completed: true,
       },
     ],
+    activeFilter: "all",
   },
   reducers: {
     addNewTodo: (state, action) => {
@@ -31,8 +32,35 @@ export const todosSlides = createSlice({
       const filtered = state.items.filter((item) => item.id !== id);
       state.items = filtered;
     },
+    changeActiveFilter: (state, action) => {
+      state.activeFilter = action.payload;
+    },
+    clearCompleted: (state) => {
+      const filtered = state.items.filter((item) => item.completed === false);
+      state.items = filtered;
+    },
   },
 });
 
-export const { addNewTodo, toggle, destroy } = todosSlides.actions;
+export const selectTodos = (state) => state.todos.items;
+export const selectFilteredTodos = (state) => {
+  if (state.todos.activeFilter === "all") {
+    return state.todos.items;
+  }
+
+  return state.todos.items.filter((todo) =>
+    state.todos.activeFilter === "active"
+      ? todo.completed === false
+      : todo.completed === true
+  );
+};
+export const selectActiveFilter = (state) => state.todos.activeFilter;
+
+export const {
+  addNewTodo,
+  toggle,
+  destroy,
+  changeActiveFilter,
+  clearCompleted,
+} = todosSlides.actions;
 export default todosSlides.reducer;
